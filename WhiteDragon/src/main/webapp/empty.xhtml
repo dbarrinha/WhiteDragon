@@ -1,0 +1,71 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <div class="card">
+                
+                <script type="text/javascript">
+				    function handleDrop(event, ui) {
+				        var droppedCar = ui.draggable;
+				        droppedCar.fadeOut('low');
+				    }
+				    
+				</script>
+				
+                <h:form id="formTarefas">
+                	
+                		<h:outputLabel value="Descrição" for="desc" />
+                		<h:inputText id="desc" value="#{timeController.tarefa.descricao}" />
+                		<h:outputLabel value="Duração" for="dur" />
+                		<h:inputText id="dur" value="#{timeController.tarefa.duracao}" />
+                		
+                		
+                		<p:commandButton value="Criar" update=":formTarefas:dgTarefas" action="#{timeController.addTarefa()}" icon="ui-icon-search">
+                    	</p:commandButton>
+                	
+                
+                	<fieldset id="tarefasAtuais" legend="Tarefas Atuais">
+                		<p:dataGrid id="dgTarefas" var="tarefa" value="#{timeController.tarefas}" columns="5">
+                			<p:panel id="pnlTarefas" header="#{tarefa.descricao}" style="text-align:center" class="card">
+                				<h:panelGrid columns="1" style="width:100%">
+                					<p:outputLabel value="#{tarefa.duracao}"></p:outputLabel>
+                				</h:panelGrid>
+                			</p:panel>
+                			<p:draggable for="pnlTarefas" revert="true" handle=".ui-panel-titlebar" stack=".ui-panel"/>
+                		</p:dataGrid>
+                	</fieldset>
+                	
+                	<p:fieldset id="selectedCars" legend="Tarefas Selecionadas" style="margin-top:20px; higth=200px">
+				        <p:outputPanel id="dropArea">
+				            
+				            <p:dataTable id="selectedCarsTable" var="tarefa" value="#{timeController.tarefasDropadas}" >
+				                <p:column headerText="Descrição">
+				                    <h:outputText value="#{tarefa}" />
+				                </p:column>
+				 
+				                
+				 
+				            </p:dataTable>
+				            
+				        </p:outputPanel>
+				    </p:fieldset>
+				    
+				    <p:droppable for="selectedCars" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="dgTarefas" onDrop="handleDrop">
+				        <p:ajax listener="#{timeController.onTarefaDrop()}" update="dropArea dgTarefas" />
+				    </p:droppable>
+                </h:form>
+                
+                      
+                </div>
+            </div>
+        </div>
+        
+    </ui:define>
+
+</ui:composition>

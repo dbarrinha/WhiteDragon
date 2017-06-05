@@ -9,59 +9,47 @@
         <div class="ui-g">
             <div class="ui-g-12">
                 <div class="card">
-                
                 <script type="text/javascript">
-				    function handleDrop(event, ui) {
-				        var droppedCar = ui.draggable;
-				        droppedCar.fadeOut('low');
-				    }
-				    
+					function handleDrop(event, ui) {
+						var tarefaDropada = ui.draggable;
+						tarefaDropada.fadeOut(‘fast’); //fade out the dropped item
+					}
 				</script>
-				
-                <h:form id="formTarefas">
-                	
-                		<h:outputLabel value="Descrição" for="desc" />
-                		<h:inputText id="desc" value="#{timeController.tarefa.descricao}" />
-                		<h:outputLabel value="Duração" for="dur" />
-                		<h:inputText id="dur" value="#{timeController.tarefa.duracao}" />
-                		
-                		
-                		<p:commandButton value="Criar" update=":formTarefas:dgTarefas" action="#{timeController.addTarefa()}" icon="ui-icon-search">
-                    	</p:commandButton>
-                	
+                <h:form id="form">
                 
-                	<fieldset id="tarefasAtuais" legend="Tarefas Atuais">
-                		<p:dataGrid id="dgTarefas" var="tarefa" value="#{timeController.tarefas}" columns="5">
-                			<p:panel id="pnlTarefas" header="#{tarefa.descricao}" style="text-align:center" class="card">
-                				<h:panelGrid columns="1" style="width:100%">
-                					<p:outputLabel value="#{tarefa.duracao}"></p:outputLabel>
-                				</h:panelGrid>
-                			</p:panel>
-                			<p:draggable for="pnlTarefas" revert="true" handle=".ui-panel-titlebar" stack=".ui-panel"/>
-                		</p:dataGrid>
-                	</fieldset>
-                	
-                	<p:fieldset id="selectedCars" legend="Tarefas Selecionadas" style="margin-top:20px; higth=200px">
-				        <p:outputPanel id="dropArea">
-				            
-				            <p:dataTable id="selectedCarsTable" var="tarefa" value="#{timeController.tarefasDropadas}" >
-				                <p:column headerText="Descrição">
-				                    <h:outputText value="#{tarefa}" />
-				                </p:column>
-				 
-				                
-				 
-				            </p:dataTable>
-				            
-				        </p:outputPanel>
-				    </p:fieldset>
-				    
-				    <p:droppable for="selectedCars" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="dgTarefas" onDrop="handleDrop">
-				        <p:ajax listener="#{timeController.onTarefaDrop()}" update="dropArea dgTarefas" />
-				    </p:droppable>
-                </h:form>
+                	<p:fieldset legend="Tarefas">
+					 	<p:dataGrid id="availableCars" var="tarefa" value="#{timeController.tarefas}" columns="3">
+						<p:column>
+					 		<p:panel id="pnl" header="#{tarefa.descricao}" style="text-align:center">
+					 			<h:panelGrid columns="1" style="width:100%">
+				                    <h:outputText value="#{tarefa.duracao}" />
+				                </h:panelGrid>
+					 		</p:panel>
+							<p:draggable for="pnl" revert="true"  stack=".ui-panel"/>
+						</p:column>
+					 	</p:dataGrid>
+					 </p:fieldset>
+					 
+					 <p:fieldset id="selectedCars" legend="Tarefas Dropadas" style="margin-top:20px">
+						<p:outputPanel id="dropArea">
+					 		 <h:outputText value="!!!Drop here!!!" rendered="#{empty timeController.tarefasDropadas}" style="font-size:24px;" />
+							 <p:dataTable var="tarefa" value="#{timeController.tarefasDropadas}" rendered="#{not empty timeController.tarefasDropadas}">
+								 <p:column headerText="Nome">
+								 	<h:outputText value="#{tarefa.descricao}" />
+								 </p:column>
+								 <p:column headerText="Duração">
+								 	<h:outputText value="#{tarefa.duracao}" />
+								 </p:column>
+							 </p:dataTable>
+						 </p:outputPanel>
+					</p:fieldset>
+					 
+					<p:droppable for="selectedCars" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="availableCars" onDrop="handleDrop">
+						<p:ajax listener="#{timeController.onDrop()}" update="dropArea availableCars" />
+					</p:droppable>
+					
+                </h:form>		 
                 
-                      
                 </div>
             </div>
         </div>

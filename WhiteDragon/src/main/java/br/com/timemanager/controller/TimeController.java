@@ -1,6 +1,7 @@
 package br.com.timemanager.controller;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import org.primefaces.event.DragDropEvent;
 
 import br.com.timemanager.model.Tarefa;
 
-
+@ViewScoped
 @Named
 @ManagedBean
 public class TimeController implements Serializable{
@@ -18,34 +19,29 @@ public class TimeController implements Serializable{
 	private static final long serialVersionUID = -8850982832236566931L;
 	
 	private List<Tarefa> tarefas = new ArrayList<>();
-	private List<String> tarefasDropadas = new ArrayList<>();
+	private List<Tarefa> tarefasDropadas = new ArrayList<>();
 	private Tarefa tarefa = new Tarefa("","");
 	
+	public TimeController() {
+    	tarefas.add(new Tarefa("Teste1","4622364"));
+    	tarefas.add(new Tarefa("Teste2","4622364"));
+    	tarefas.add(new Tarefa("Teste3","4622364"));
+    	tarefas.add(new Tarefa("Teste4","4622364"));
+	}
 	
-	
-	
-	public List<String> getTarefasDropadas() {
+	public List<Tarefa> getTarefasDropadas() {
 		return tarefasDropadas;
 	}
 
-	public void setTarefasDropadas(List<String> tarefasDropadas) {
+	public void setTarefasDropadas(List<Tarefa> tarefasDropadas) {
 		this.tarefasDropadas = tarefasDropadas;
 	}
 
-	
-
-	@PostConstruct
-    public void init() {
-		tarefasDropadas.add("teste");
-		tarefasDropadas.add("teste2");
-		
-    }
-	
-	public void addTarefa(){
+	/*public void addTarefa(){
 		
 		tarefas.add(tarefa);
 		System.out.println(tarefas.size());
-	}
+	}*/
 
 	public List<Tarefa> getTarefas() {
 		return tarefas;
@@ -55,9 +51,7 @@ public class TimeController implements Serializable{
 		this.tarefas = tarefas;
 	}
 	
-	
-	
-	 public Tarefa getTarefa() {
+	public Tarefa getTarefa() {
 		return tarefa;
 	}
 
@@ -65,13 +59,17 @@ public class TimeController implements Serializable{
 		this.tarefa = tarefa;
 	}
 
-	public void onTarefaDrop(DragDropEvent ddEvent) {
-	        Tarefa car = ((Tarefa) ddEvent.getData());
-	        System.out.println("ok");
-	        //Tarefa aux = new Tarefa(car.getDescricao(),car.getDuracao());
-	        System.out.println("ok");
-	        tarefasDropadas.add(car.getDescricao());
-	        System.out.println(tarefasDropadas.size());
-	    }
+	public void onDrop(DragDropEvent ddEvent) {
+		Tarefa tarefa = ((Tarefa) ddEvent.getData());
+		tarefasDropadas.add(tarefa);
+		tarefas.remove(tarefa);
+	}
+	
 	
 }
+
+
+
+
+
+

@@ -8,49 +8,35 @@
     <ui:define name="content">
         <div class="ui-g">
             <div class="ui-g-12">
-                <div class="card">
-                <script type="text/javascript">
-					function handleDrop(event, ui) {
-						var tarefaDropada = ui.draggable;
-						tarefaDropada.fadeOut(‘fast’); //fade out the dropped item
-					}
-				</script>
+                
+                
+                <style>
+				  #gallery { float: left; width: 65%; min-height: 12em; }
+				  .gallery.custom-state-active { background: #eee; }
+				  .gallery li { float: left; width: 96px; padding: 0.4em; margin: 0 0.4em 0.4em 0; text-align: center; }
+				  .gallery li h5 { margin: 0 0 0.4em; cursor: move; }
+				 
+				  #trash { float: right; width: 32%; min-height: 18em; padding: 1%; }
+				  #trash h4 { line-height: 16px; margin: 0 0 0.4em; }
+				  #trash h4 .ui-icon { float: left; }
+				  #trash .gallery h5 { display: none; }
+				</style>
+					
                 <h:form id="form">
                 
-                	<p:fieldset legend="Tarefas">
-					 	<p:dataGrid id="availableCars" var="tarefa" value="#{timeController.tarefas}" columns="3">
-						<p:column>
-					 		<p:panel id="pnl" header="#{tarefa.descricao}" style="text-align:center">
-					 			<h:panelGrid columns="1" style="width:100%">
-				                    <h:outputText value="#{tarefa.duracao}" />
-				                </h:panelGrid>
-					 		</p:panel>
-							<p:draggable for="pnl" revert="true"  stack=".ui-panel"/>
-						</p:column>
-					 	</p:dataGrid>
-					 </p:fieldset>
-					 
-					 <p:fieldset id="selectedCars" legend="Tarefas Dropadas" style="margin-top:20px">
-						<p:outputPanel id="dropArea">
-					 		 <h:outputText value="!!!Drop here!!!" rendered="#{empty timeController.tarefasDropadas}" style="font-size:24px;" />
-							 <p:dataTable var="tarefa" value="#{timeController.tarefasDropadas}" rendered="#{not empty timeController.tarefasDropadas}">
-								 <p:column headerText="Nome">
-								 	<h:outputText value="#{tarefa.descricao}" />
-								 </p:column>
-								 <p:column headerText="Duração">
-								 	<h:outputText value="#{tarefa.duracao}" />
-								 </p:column>
-							 </p:dataTable>
-						 </p:outputPanel>
-					</p:fieldset>
-					 
-					<p:droppable for="selectedCars" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="availableCars" onDrop="handleDrop">
-						<p:ajax listener="#{timeController.onDrop()}" update="dropArea availableCars" />
-					</p:droppable>
+					<ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix">
+					  <li><h5 class="ui-widget-header" >#{timeController.teste}</h5></li>
+					</ul>
 					
-                </h:form>		 
+					<div id="trash" class="ui-widget-content ui-state-default">
+					  <h4 class="ui-widget-header"><span class="ui-icon ui-icon-trash">Trash</span> Trash</h4>
+					</div>
+					
+                </h:form>
+                <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  				<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>		 
+                <script type="text/javascript" src="resources/omega-layout/js/sortable.js"></script>
                 
-                </div>
             </div>
         </div>
         

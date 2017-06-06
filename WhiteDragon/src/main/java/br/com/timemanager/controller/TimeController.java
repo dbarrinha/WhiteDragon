@@ -1,6 +1,7 @@
 package br.com.timemanager.controller;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -11,7 +12,7 @@ import org.primefaces.event.DragDropEvent;
 
 import br.com.timemanager.model.Tarefa;
 
-@ViewScoped
+@SessionScoped
 @Named
 @ManagedBean
 public class TimeController implements Serializable{
@@ -21,7 +22,16 @@ public class TimeController implements Serializable{
 	private List<Tarefa> tarefas = new ArrayList<>();
 	private List<Tarefa> tarefasDropadas = new ArrayList<>();
 	private Tarefa tarefa = new Tarefa("","");
+	private String teste = "bláu";
 	
+	public String getTeste() {
+		return teste;
+	}
+
+	public void setTeste(String teste) {
+		this.teste = teste;
+	}
+
 	public TimeController() {
     	tarefas.add(new Tarefa("Teste1","4622364"));
     	tarefas.add(new Tarefa("Teste2","4622364"));
@@ -60,6 +70,7 @@ public class TimeController implements Serializable{
 	}
 
 	public void onDrop(DragDropEvent ddEvent) {
+		System.out.println("Entrou on drop");
 		Tarefa tarefa = ((Tarefa) ddEvent.getData());
 		tarefasDropadas.add(tarefa);
 		tarefas.remove(tarefa);

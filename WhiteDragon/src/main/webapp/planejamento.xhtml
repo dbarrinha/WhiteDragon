@@ -1,0 +1,93 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                 
+                <style>
+				  	#sortable1, #sortable2, #sortable3 {background-color:#00b0eb; list-style-type: none; margin: 0; float: left; margin-right: 10px;  padding: 5px; width: 143px; min-height: 250px;}
+  					#sortable1 li, #sortable2 li, #sortable3 li { margin: 5px; padding: 5px; font-size: 1.2em; width: 120px; }
+				</style>
+				<script>
+				$( function() {
+				    $( "ul.droptrue" ).sortable({
+				      connectWith: "ul",
+				      cursor: "move",
+				      placeholder: "sortable-placeholder",
+				      opacity: 0.5,
+				      update: function( event, ui ) {
+					      
+					      }
+				      
+				    });
+				    
+				    
+				 
+				    $( "#sortable1, #sortable2, #sortable3" ).disableSelection();
+				  } );
+
+
+				  </script>	
+					
+                
+                <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  				<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+                
+            </div>
+                <div class="ui-g-12 ui-g-nopad">
+		            <div class="ui-g">
+		            	<h:form id="form">
+			                <div class="ui-g-6 ui-md-4">
+			                	
+									<ul id="sortable2" class="droptrue" >
+										<p:repeat var="tarefa" value="#{timeController.tarefas}">
+											<li class="ui-state-highlight">#{tarefa.descricao}</li>
+										</p:repeat>
+									</ul>
+								
+			                </div>
+			                  
+			                <div class="ui-g-6 ui-md-4">
+			                	<ul id="sortable2" class="droptrue" >
+								  <li class="ui-state-highlight">Cannot be dropped..</li>
+								  <li class="ui-state-highlight">..on an empty list</li>
+								  <li class="ui-state-highlight">Item 3</li>
+								  <li class="ui-state-highlight">Item 4</li>
+								  <li class="ui-state-highlight">Item 5</li>
+								</ul>
+			                </div> 
+			                
+			                <div class="ui-g-6 ui-md-4">
+			                	<ul id="sortable3" class="droptrue">
+								</ul>
+			                </div>
+			                <br style="clear:both"/>
+							<br style="clear:both"/>    
+			                <div class="ui-g-6 ui-md-4">
+			                	<ul id="sortable3" class="droptrue">
+								</ul>	
+			                </div> 
+			                
+			                <div class="ui-g-6 ui-md-4">
+			                	<ul id="sortable3" class="droptrue">
+								</ul>
+			                </div>
+			                
+			                <div class="ui-g-6 ui-md-4">
+			                	<ul id="sortable3" class="droptrue">
+								</ul>
+			                </div>
+			           	</h:form>          
+		            </div>
+		 
+		        </div>
+        </div>
+        
+    </ui:define>
+
+</ui:composition>

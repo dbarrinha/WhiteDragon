@@ -6,6 +6,8 @@ import javax.faces.bean.ViewScoped;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import org.primefaces.event.DragDropEvent;
@@ -22,26 +24,20 @@ public class TimeController implements Serializable{
 	private List<Tarefa> tarefas = new ArrayList<>();
 	private List<Tarefa> tarefasDropadas = new ArrayList<>();
 	private Tarefa tarefa = new Tarefa("","");
-	private String teste = "bláu";
+	String [] semana = {"Segunda","Terça","Quarta","Quinta","Sexta","Sábado","Domingo"};
 	
-	public String getTeste() {
-		return teste;
-	}
-
-	public void setTeste(String teste) {
-		this.teste = teste;
-	}
-
 	public TimeController() {
-    	tarefas.add(new Tarefa("Teste1","4622364"));
-    	tarefas.add(new Tarefa("Teste2","4622364"));
-    	tarefas.add(new Tarefa("Teste3","4622364"));
-    	tarefas.add(new Tarefa("Teste4","4622364"));
+    	tarefas.add(new Tarefa("Teste1","12"));
+    	tarefas.add(new Tarefa("Teste2","43"));
+    	tarefas.add(new Tarefa("Teste3","4"));
+    	tarefas.add(new Tarefa("Teste4","1"));
 	}
 	
 	public List<Tarefa> getTarefasDropadas() {
 		return tarefasDropadas;
 	}
+	
+	
 
 	public void setTarefasDropadas(List<Tarefa> tarefasDropadas) {
 		this.tarefasDropadas = tarefasDropadas;
@@ -75,6 +71,29 @@ public class TimeController implements Serializable{
 		tarefasDropadas.add(tarefa);
 		tarefas.remove(tarefa);
 	}
+	
+	public String dataAtual(int index){
+		Date aux = new Date(System.currentTimeMillis());
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(aux);
+		cal.add(Calendar.DATE, index-1);
+		aux = cal.getTime();
+		
+		return (aux.getDate()+1)+"/"+(aux.getMonth()+1);
+	}
+	
+	public String diaSemana(int index){
+		Date aux = new Date(System.currentTimeMillis());
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(aux);
+		cal.add(Calendar.DATE, index-1);
+		aux = cal.getTime();
+		
+		return semana[aux.getDay()] + "";
+	}
+	
+	
+	
 	
 	
 }

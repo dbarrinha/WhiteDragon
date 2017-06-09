@@ -9,33 +9,65 @@
         <div class="ui-g">
             <div class="ui-g-12">
                 
-                
+                <script>
+	                var comeco,final;
+	                $( "#sortable" ).sortable({
+	                    change: function(event, ui) {		
+	                        var pos = ui.helper.index() > ui.placeholder.index() 
+	                            ? { start: ui.helper.index(), end: ui.placeholder.index() }
+	                            : { start: ui.placeholder.index(), end: ui.helper.index() }
+	                       comeco = pos.start;  
+	                        final = pos.end; 
+	                         ui.item.startPos = ui.item.index();
+	                        $(this)
+	                            .children().removeClass( 'highlight' )
+	                            .not( ui.helper ).slice( pos.start, pos.end ).addClass( 'highlight' );
+	                    },
+	                    stop: function(event, ui) {
+	                        $(this).children().removeClass( 'highlight' );
+	                        console.log("nova: " + ui.item.index());
+	                        console.log("inicial: " + ui.item.startPos);
+	                    }
+	                });
+                </script>
                 <style>
-				  #gallery { float: left; width: 65%; min-height: 12em; }
-				  .gallery.custom-state-active { background: #eee; }
-				  .gallery li { float: left; width: 96px; padding: 0.4em; margin: 0 0.4em 0.4em 0; text-align: center; }
-				  .gallery li h5 { margin: 0 0 0.4em; cursor: move; }
-				 
-				  #trash { float: right; width: 32%; min-height: 18em; padding: 1%; }
-				  #trash h4 { line-height: 16px; margin: 0 0 0.4em; }
-				  #trash h4 .ui-icon { float: left; }
-				  #trash .gallery h5 { display: none; }
-				</style>
-					
-                <h:form id="form">
+                	#sortable { 
+					    list-style-type: none; 
+					    margin: 0; 
+					    padding: 0; 
+					    width: 60%; 
+					}
+					.ui-state-default { 
+					    border: 1px solid #d3d3d3;
+					    background-color: #E4E4E4;
+					    margin: 0 3px 3px 3px; 
+					    padding: 0.4em;
+					    font-size: 1.4em; 
+					    height: 18px; 
+					}
+					.highlight{
+					    background-color: #B24926;	
+					}
+                	
+                </style>
                 
-					<ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix">
-					  <li><h5 class="ui-widget-header" >#{timeController.teste}</h5></li>
-					</ul>
-					
-					<div id="trash" class="ui-widget-content ui-state-default">
-					  <h4 class="ui-widget-header"><span class="ui-icon ui-icon-trash">Trash</span> Trash</h4>
-					</div>
-					
+				
+                <h:form id="form">
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+				 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+				<ul id="sortable">
+				    <li class="ui-state-default">Item 1</li>
+				    <li class="ui-state-default">Item 2</li>
+				    <li class="ui-state-default">Item 3</li>
+				    <li class="ui-state-default">Item 4</li>
+				    <li class="ui-state-default">Item 5</li>
+				    <li class="ui-state-default">Item 6</li>
+				    <li class="ui-state-default">Item 7</li>
+				    <li class="ui-state-default">Item 8</li>
+				    <li class="ui-state-default">Item 9</li>
+				</ul>
                 </h:form>
-                <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  				<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>		 
-                <script type="text/javascript" src="resources/omega-layout/js/sortable.js"></script>
+                
                 
             </div>
         </div>

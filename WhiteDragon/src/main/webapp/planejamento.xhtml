@@ -10,8 +10,14 @@
             <div class="ui-g-12">
                  
                 <style>
-				  	#sortable1, #sortable2, #sortable3 {background-color:#00b0eb; list-style-type: none; margin: 0; float: left; margin-right: 10px;  padding: 5px; width: 143px; min-height: 250px;}
-  					#sortable1 li, #sortable2 li, #sortable3 li { margin: 5px; padding: 5px; font-size: 1.2em; width: 120px; }
+				  	#sortable1, #sortable2, #sortable3 {border-radius:6px; background-color:#00b0eb; list-style-type: none; margin: 0; float: left; margin-right: 10px;  padding: 5px; width: 143px; min-height: 250px;}
+  					#sortable1 li, #sortable2 li, #sortable3 li { margin: 5px; padding: 5px; font-size: 1.2em; width: 120px; border-radius: 3px;}
+  					sup{
+  						background-color: rgb(230,90,90);
+  						border-radius: 20%;
+  						width: 400px; 
+  					}
+  					fieldset {border-radius:6px; background-color:#00b0eb; list-style-type: none; margin: 0; float: left; margin-right: 10px;  padding: 5px; width: 143px; min-height: 250px;}
 				</style>
 				<script>
 				$( function() {
@@ -19,18 +25,30 @@
 				      connectWith: "ul",
 				      cursor: "move",
 				      placeholder: "sortable-placeholder",
-				      opacity: 0.5,
+				      opacity: 0.8,
 				      update: function( event, ui ) {
-					      
+					      var tarefa = event.item;
 					      }
-				      
 				    });
 				    
-				    
-				 
 				    $( "#sortable1, #sortable2, #sortable3" ).disableSelection();
 				  } );
 
+				$("meuelemento").onDrop(function(e){
+					var filho = e.Item;
+					var pai = e.Item.parent; //targetElement -- elemento que recebeu o item
+					$.get("paginaSemNada.xhtml?filho="+filho+"&pai="+pai)
+						.onSuccess(function(retorno){
+							// apenas exibe que retornou
+							// ou testa o retorno
+							if (retorno == "deu certo carai") {
+								// da ok =-- recomendo nao fazer nada
+							} else {
+								// desfaz a operacao e gera aviso de erro
+							}	
+						})
+					;	
+				});
 
 				  </script>	
 					
@@ -42,45 +60,87 @@
                 <div class="ui-g-12 ui-g-nopad">
 		            <div class="ui-g">
 		            	<h:form id="form">
-			                <div class="ui-g-6 ui-md-4">
-			                	
+		            	
+			                <div class="ui-g-6 ui-md-3">
+				                <p:fieldset legend="Hoje #{timeController.dataAtual(0)}">
 									<ul id="sortable2" class="droptrue" >
 										<p:repeat var="tarefa" value="#{timeController.tarefas}">
-											<li class="ui-state-highlight">#{tarefa.descricao}</li>
+											<li class="ui-state-highlight">#{tarefa.descricao}<sup><small>#{tarefa.duracao}</small></sup></li>
 										</p:repeat>
 									</ul>
-								
+								</p:fieldset>
 			                </div>
 			                  
-			                <div class="ui-g-6 ui-md-4">
-			                	<ul id="sortable2" class="droptrue" >
-								  <li class="ui-state-highlight">Cannot be dropped..</li>
-								  <li class="ui-state-highlight">..on an empty list</li>
-								  <li class="ui-state-highlight">Item 3</li>
-								  <li class="ui-state-highlight">Item 4</li>
-								  <li class="ui-state-highlight">Item 5</li>
-								</ul>
+			                <div class="ui-g-6 ui-md-3">
+			                	<p:fieldset legend="#{timeController.diaSemana(1)} #{timeController.dataAtual(1)}">
+									<ul id="sortable2" class="droptrue" >
+										<p:repeat var="tarefa" value="#{timeController.tarefas}">
+											<li class="ui-state-highlight">#{tarefa.descricao}<sup><small>#{tarefa.duracao}</small></sup></li>
+										</p:repeat>
+									</ul>
+								</p:fieldset>
 			                </div> 
 			                
-			                <div class="ui-g-6 ui-md-4">
-			                	<ul id="sortable3" class="droptrue">
-								</ul>
+			                <div class="ui-g-6 ui-md-3">
+			                	<p:fieldset legend="#{timeController.diaSemana(2)} #{timeController.dataAtual(2)}">
+									<ul id="sortable2" class="droptrue" >
+										<p:repeat var="tarefa" value="#{timeController.tarefas}">
+											<li class="ui-state-highlight">#{tarefa.descricao}<sup><small>#{tarefa.duracao}</small></sup></li>
+										</p:repeat>
+									</ul>
+								</p:fieldset>
+			                </div>
+			                
+			                <div class="ui-g-6 ui-md-3">
+			                	<p:fieldset legend="#{timeController.diaSemana(3)} #{timeController.dataAtual(3)}">
+									<ul id="sortable2" class="droptrue" >
+										<p:repeat var="tarefa" value="#{timeController.tarefas}">
+											<li class="ui-state-highlight">#{tarefa.descricao}<sup><small>#{tarefa.duracao}</small></sup></li>
+										</p:repeat>
+									</ul>
+								</p:fieldset>
 			                </div>
 			                <br style="clear:both"/>
-							<br style="clear:both"/>    
-			                <div class="ui-g-6 ui-md-4">
-			                	<ul id="sortable3" class="droptrue">
-								</ul>	
+							<br style="clear:both"/>
+							    
+			                <div class="ui-g-6 ui-md-3">
+			                	<p:fieldset legend="#{timeController.diaSemana(4)} #{timeController.dataAtual(4)}">
+									<ul id="sortable2" class="droptrue" >
+										<p:repeat var="tarefa" value="#{timeController.tarefas}">
+											<li class="ui-state-highlight">#{tarefa.descricao}<sup><small>#{tarefa.duracao}</small></sup></li>
+										</p:repeat>
+									</ul>
+								</p:fieldset>
 			                </div> 
 			                
-			                <div class="ui-g-6 ui-md-4">
-			                	<ul id="sortable3" class="droptrue">
-								</ul>
+			                <div class="ui-g-6 ui-md-3">
+			                	<p:fieldset legend="#{timeController.diaSemana(5)} #{timeController.dataAtual(5)}">
+									<ul id="sortable2" class="droptrue" >
+										<p:repeat var="tarefa" value="#{timeController.tarefas}">
+											<li class="ui-state-highlight">#{tarefa.descricao}<sup><small>#{tarefa.duracao}</small></sup></li>
+										</p:repeat>
+									</ul>
+								</p:fieldset>
 			                </div>
 			                
-			                <div class="ui-g-6 ui-md-4">
-			                	<ul id="sortable3" class="droptrue">
-								</ul>
+			                <div class="ui-g-6 ui-md-3">
+			                	<p:fieldset legend="#{timeController.diaSemana(6)} #{timeController.dataAtual(6)}">
+									<ul id="sortable2" class="droptrue" >
+										<p:repeat var="tarefa" value="#{timeController.tarefas}">
+											<li class="ui-state-highlight">#{tarefa.descricao}<sup><small>#{tarefa.duracao}</small></sup></li>
+										</p:repeat>
+									</ul>
+								</p:fieldset>
+			                </div>
+			                
+			                <div class="ui-g-6 ui-md-3">
+			                	<p:fieldset legend="#{timeController.diaSemana(7)} #{timeController.dataAtual(7)}">
+									<ul id="sortable2" class="droptrue" >
+										<p:repeat var="tarefa" value="#{timeController.tarefas}">
+											<li class="ui-state-highlight">#{tarefa.descricao}<sup><small>#{tarefa.duracao}</small></sup></li>
+										</p:repeat>
+									</ul>
+								</p:fieldset>
 			                </div>
 			           	</h:form>          
 		            </div>

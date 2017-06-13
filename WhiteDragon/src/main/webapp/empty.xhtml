@@ -8,67 +8,50 @@
     <ui:define name="content">
         <div class="ui-g">
             <div class="ui-g-12">
-                
-                <script>
-	                var comeco,final;
-	                $( "#sortable" ).sortable({
-	                    change: function(event, ui) {		
-	                        var pos = ui.helper.index() > ui.placeholder.index() 
-	                            ? { start: ui.helper.index(), end: ui.placeholder.index() }
-	                            : { start: ui.placeholder.index(), end: ui.helper.index() }
-	                       comeco = pos.start;  
-	                        final = pos.end; 
-	                         ui.item.startPos = ui.item.index();
-	                        $(this)
-	                            .children().removeClass( 'highlight' )
-	                            .not( ui.helper ).slice( pos.start, pos.end ).addClass( 'highlight' );
-	                    },
-	                    stop: function(event, ui) {
-	                        $(this).children().removeClass( 'highlight' );
-	                        console.log("nova: " + ui.item.index());
-	                        console.log("inicial: " + ui.item.startPos);
-	                    }
-	                });
-                </script>
-                <style>
-                	#sortable { 
-					    list-style-type: none; 
-					    margin: 0; 
-					    padding: 0; 
-					    width: 60%; 
-					}
-					.ui-state-default { 
-					    border: 1px solid #d3d3d3;
-					    background-color: #E4E4E4;
-					    margin: 0 3px 3px 3px; 
-					    padding: 0.4em;
-					    font-size: 1.4em; 
-					    height: 18px; 
-					}
-					.highlight{
-					    background-color: #B24926;	
-					}
-                	
-                </style>
-                
-				
+            	<script type="text/javascript">
+				    function handleDrop(event, ui) {
+				        var droppedCar = ui.draggable;
+				        droppedCar.fadeOut('fast');
+				        
+				    }
+				</script>
+            
                 <h:form id="form">
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-				 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-				<ul id="sortable">
-				    <li class="ui-state-default">Item 1</li>
-				    <li class="ui-state-default">Item 2</li>
-				    <li class="ui-state-default">Item 3</li>
-				    <li class="ui-state-default">Item 4</li>
-				    <li class="ui-state-default">Item 5</li>
-				    <li class="ui-state-default">Item 6</li>
-				    <li class="ui-state-default">Item 7</li>
-				    <li class="ui-state-default">Item 8</li>
-				    <li class="ui-state-default">Item 9</li>
-				</ul>
+                
+               		<p:fieldset id="availableCarsField" legend="Available Cars">
+				        <p:dataTable id="availableCars" var="car" value="#{timeController.tarefas}">
+				            <p:column style="width:20px">
+				                <h:outputText id="dragIcon" styleClass="ui-icon ui-icon-arrow-4" />
+				                <p:draggable for="dragIcon" revert="true" helper="clone"/>
+				            </p:column>
+				 
+				            <p:column headerText="Id">
+				                <h:outputText value="#{car.descricao}" />
+				            </p:column>
+				 
+				            <p:column headerText="Year">
+				                <h:outputText value="#{car.duracao}" />
+				            </p:column>
+				 
+				        </p:dataTable>
+				    </p:fieldset>
+				 
+				    <p:droppable for="teste1" tolerance="touch" activeStyleClass="ui-state-highlight"  datasource="availableCars"  onDrop="handleDrop">
+				        <p:ajax listener="#{timeController.onDrop}" update="teste1 form  availableCars" />
+				    </p:droppable>
+				    
+				    
+					<p:dataGrid id="teste1" var="car" value="#{timeController.tarefasDropadas}" columns="3">
+			            <p:panel id="pnl" header="#{car.descricao}" style="text-align:center">
+			                <h:panelGrid columns="1" style="width:100%">
+			                    <h:outputText value="#{car.duracao}" />
+			                </h:panelGrid>
+			            </p:panel>
+			 
+			            <p:draggable for="pnl" revert="true" handle=".ui-panel-titlebar" stack=".ui-panel"/>
+			        </p:dataGrid>
+				
                 </h:form>
-                
-                
             </div>
         </div>
         

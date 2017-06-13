@@ -70,6 +70,7 @@ public class TimeController implements Serializable{
 		Tarefa tarefa = ((Tarefa) ddEvent.getData());
 		tarefasDropadas.add(tarefa);
 		tarefas.remove(tarefa);
+		System.out.println("Tam 1: "+tarefas.size() + "Tam 2: "+ tarefasDropadas.size());
 	}
 	
 	public String dataAtual(int index){

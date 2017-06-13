@@ -18,6 +18,6 @@ public class planejamentoController implements Serializable{
 	private static final long serialVersionUID = -13697391047336495L;
   
 	private List<Tarefa> tarefas;
-	     
-	private TreeNode tarefas1;
+	 
+	
 }

@@ -37,8 +37,6 @@ public class TimeController implements Serializable{
 		return tarefasDropadas;
 	}
 	
-	
-
 	public void setTarefasDropadas(List<Tarefa> tarefasDropadas) {
 		this.tarefasDropadas = tarefasDropadas;
 	}

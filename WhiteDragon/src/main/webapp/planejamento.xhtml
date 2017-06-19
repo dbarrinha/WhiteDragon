@@ -34,10 +34,11 @@
 				    $( "#sortable1, #sortable2, #sortable3" ).disableSelection();
 				  } );
 
-				$("meuelemento").onDrop(function(e){
+				$("ul").onDrop(function(e){
 					var filho = e.Item;
 					var pai = e.Item.parent; //targetElement -- elemento que recebeu o item
-					$.get("paginaSemNada.xhtml?filho="+filho+"&pai="+pai)
+					alert(pai);
+					$.get("webServer.html?filho="+filho+"&pai="+pai)
 						.onSuccess(function(retorno){
 							// apenas exibe que retornou
 							// ou testa o retorno
@@ -46,8 +47,7 @@
 							} else {
 								// desfaz a operacao e gera aviso de erro
 							}	
-						})
-					;	
+						});	
 				});
 
 				  </script>	

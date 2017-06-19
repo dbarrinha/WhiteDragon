@@ -10,13 +10,13 @@
             <div class="ui-g-12">
             	<script type="text/javascript">
 				    function initDND() {
-				        $('.ui-treenode-leaf').draggable({
+				        $('.ui-dataGrid-').draggable({
 				           helper: 'clone',
 				           scope: 'treetotable',
 				           zIndex: ++PrimeFaces.zindex
 				        });
 				 
-				        $('.ui-datatable .droppoint').droppable({
+				        $('.ui-dataGrid .droppoint').droppable({
 				           activeClass: 'ui-state-active',
 				           hoverClass: 'ui-state-highlight',
 				           tolerance: 'pointer',
@@ -34,7 +34,7 @@
 				           }
 				        });
 				 
-				        $('.ui-datatable th').draggable({
+				        $('.ui-dataGrid panel').draggable({
 				           scope: 'tabletotree',
 				           helper: function() {
 				               var th = $(this);
@@ -43,7 +43,7 @@
 				           }
 				        });
 				 
-				        $('.ui-tree').droppable({
+				        $('.ui-dataGrid').droppable({
 				           helper: 'clone',
 				           scope: 'tabletotree',
 				           activeClass: 'ui-state-active',
@@ -61,8 +61,30 @@
 				        initDND();
 				    });
 				</script>
+                
                 <h:form id="form">
-                	
+	                <p:remoteCommand name="treeToTable" actionListener="#{columnManagerView.treeToTable}" update="teste teste1" oncomplete="initDND()"/>
+	   				<p:remoteCommand name="tableToTree" actionListener="#{columnManagerView.tableToTree}" update="teste teste1" oncomplete="initDND()"/>	
+	   				
+	   				<p:dataGrid id="teste" var="car" value="#{timeController.tarefas}" columns="3">
+			            <p:panel id="pnl" header="#{car.descricao}" style="text-align:center">
+			                <h:panelGrid columns="1" style="width:100%">
+			                    <h:outputText value="#{car.duracao}" />
+			                </h:panelGrid>
+			            </p:panel>
+			 
+			            <p:draggable for="pnl" revert="true" handle=".ui-panel-titlebar" stack=".ui-panel"/>
+			        </p:dataGrid>
+			        
+			        <p:dataGrid id="teste1" var="car" value="#{timeController.tarefasDropadas}" columns="3">
+			            <p:panel id="pnl1" header="#{car.descricao}" style="text-align:center">
+			                <h:panelGrid columns="1" style="width:100%">
+			                    <h:outputText value="#{car.duracao}" />
+			                </h:panelGrid>
+			            </p:panel>
+			 
+			            <p:draggable for="pnl1" revert="true" handle=".ui-panel-titlebar" stack=".ui-panel"/>
+			        </p:dataGrid>
                 
                 
                 </h:form>

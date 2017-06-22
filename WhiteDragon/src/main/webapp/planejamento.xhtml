@@ -35,7 +35,7 @@
 				  } );
 
 				$("ul").onDrop(function(e){
-					var filho = e.Item;
+					//var filho = e.Item;
 					var pai = e.Item.parent; //targetElement -- elemento que recebeu o item
 					alert(pai);
 					$.get("webServer.html?filho="+filho+"&pai="+pai)

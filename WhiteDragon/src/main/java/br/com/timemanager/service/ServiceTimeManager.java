@@ -19,6 +19,6 @@ public class ServiceTimeManager extends HttpServlet {
 		String nome = request.getParameter("nome");
 		System.out.println(nome);
 		PrintWriter out = response.getWriter();
-		out.println("String enviada via get: " + nome);
+		System.out.println("String enviada via get: " + nome);
 	}
 }

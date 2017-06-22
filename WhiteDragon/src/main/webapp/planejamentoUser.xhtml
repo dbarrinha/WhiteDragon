@@ -8,83 +8,80 @@
     <ui:define name="content">
         <div class="ui-g">
             <div class="ui-g-12">
+            	<style>
+            		.droptarget, .droptarget1 {
+					    border: 1px solid #aaaaaa;
+					}
+            	
+            	</style>
+            
             	<script type="text/javascript">
-				    function initDND() {
-				        $('.ui-dataGrid-').draggable({
-				           helper: 'clone',
-				           scope: 'treetotable',
-				           zIndex: ++PrimeFaces.zindex
-				        });
-				 
-				        $('.ui-dataGrid .droppoint').droppable({
-				           activeClass: 'ui-state-active',
-				           hoverClass: 'ui-state-highlight',
-				           tolerance: 'pointer',
-				           scope: 'treetotable',
-				           drop: function(event, ui) {
-				               var property = ui.draggable.find('.ui-treenode-label').text(),
-				               droppedColumnId = $(this).parents('th:first').attr('id'),
-				               dropPos = $(this).hasClass('dropleft') ? 0 : 1;
-				 
-				               treeToTable([
-				                    {name: 'property', value:  property}
-				                   ,{name: 'droppedColumnId', value: droppedColumnId}
-				                   ,{name: 'dropPos', value: dropPos}
-				               ]);
-				           }
-				        });
-				 
-				        $('.ui-dataGrid panel').draggable({
-				           scope: 'tabletotree',
-				           helper: function() {
-				               var th = $(this);
-				 
-				               return th.clone().appendTo(document.body).css('width', th.width());
-				           }
-				        });
-				 
-				        $('.ui-dataGrid').droppable({
-				           helper: 'clone',
-				           scope: 'tabletotree',
-				           activeClass: 'ui-state-active',
-				           hoverClass: 'ui-state-highlight',
-				           tolerance: 'touch',
-				           drop: function(event, ui) {                               
-				               tableToTree([
-				                   {name: 'colIndex', value:  ui.draggable.index()}
-				               ]);
-				           }
-				        });
-				    }
-				 
-				    $(function() {
-				        initDND();
-				    });
+
+            	document.addEventListener("dragstart", function(event) {
+            	    event.dataTransfer.setData("Text", event.target.id);
+            	    document.getElementById("demo").innerHTML = "Started to drag the p element.";
+            	    event.target.style.opacity = "0.4";
+            	});
+
+            	document.addEventListener("dragend", function(event) {
+            	    event.target.style.opacity = "1";
+            	});
+
+
+            	/* Events fired on the drop target */
+
+            	// When the draggable p element enters the droptarget, change the DIVS's border style
+            	document.addEventListener("dragenter", function(event) {
+            	    if ( event.target.className == "droptarget1" || event.target.className == "droptarget") {
+            	        event.target.style.border = "3px dotted red";
+            	        alert( event.target.className);
+            	    }
+            	});
+
+            	// By default, data/elements cannot be dropped in other elements. To allow a drop, we must prevent the default handling of the element
+            	document.addEventListener("dragover", function(event) {
+            	    event.preventDefault();
+            	});
+
+            	// When the draggable p element leaves the droptarget, reset the DIVS's border style
+            	document.addEventListener("dragleave", function(event) {
+            	    if ( event.target.className == "droptarget1" || event.target.className == "droptarget") {
+            	        event.target.style.border = "";
+            	    }
+            	});
+
+            	
+            	document.addEventListener("drop", function(event) {
+            	    event.preventDefault();
+            	    if ( event.target.className == "droptarget1" || event.target.className == "droptarget") {
+            	        document.getElementById("demo").style.color = "";
+            	        event.target.style.border = "";
+            	        var data = event.dataTransfer.getData("Text");
+            	        event.target.appendChild(document.getElementById(data));
+            	    }
+            	});
 				</script>
                 
                 <h:form id="form">
-	                <p:remoteCommand name="treeToTable" actionListener="#{columnManagerView.treeToTable}" update="teste teste1" oncomplete="initDND()"/>
-	   				<p:remoteCommand name="tableToTree" actionListener="#{columnManagerView.tableToTree}" update="teste teste1" oncomplete="initDND()"/>	
-	   				
-	   				<p:dataGrid id="teste" var="car" value="#{timeController.tarefas}" columns="3">
-			            <p:panel id="pnl" header="#{car.descricao}" style="text-align:center">
-			                <h:panelGrid columns="1" style="width:100%">
-			                    <h:outputText value="#{car.duracao}" />
-			                </h:panelGrid>
-			            </p:panel>
-			 
-			            <p:draggable for="pnl" revert="true" handle=".ui-panel-titlebar" stack=".ui-panel"/>
-			        </p:dataGrid>
-			        
-			        <p:dataGrid id="teste1" var="car" value="#{timeController.tarefasDropadas}" columns="3">
-			            <p:panel id="pnl1" header="#{car.descricao}" style="text-align:center">
-			                <h:panelGrid columns="1" style="width:100%">
-			                    <h:outputText value="#{car.duracao}" />
-			                </h:panelGrid>
-			            </p:panel>
-			 
-			            <p:draggable for="pnl1" revert="true" handle=".ui-panel-titlebar" stack=".ui-panel"/>
-			        </p:dataGrid>
+	                		<div class="ui-g-6 ui-md-3">
+				                <p:fieldset legend="Hoje #{timeController.dataAtual(0)}">
+									<ul id="1" class="droptarget" >
+										<p:repeat var="tarefa" value="#{timeController.tarefas}">
+											<li class="dragtarget" draggable="true">#{tarefa.descricao}<sup><small>#{tarefa.duracao}</small></sup></li>
+										</p:repeat>
+									</ul>
+								</p:fieldset>
+			                </div>
+			                  
+			                <div class="ui-g-6 ui-md-3">
+			                	<p:fieldset legend="#{timeController.diaSemana(1)} #{timeController.dataAtual(1)}">
+									<ul id="2" class="droptarget1" >
+										<p:repeat var="tarefa" value="#{timeController.tarefas}">
+											<li class="dragtarget" draggable="true">#{tarefa.descricao}<sup><small>#{tarefa.duracao}</small></sup></li>
+										</p:repeat>
+									</ul>
+								</p:fieldset>
+			                </div>
                 
                 
                 </h:form>

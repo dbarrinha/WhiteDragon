@@ -15,9 +15,8 @@ public class ServiceTimeManager extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String nome = request.getParameter("nome");
-		System.out.println(nome);
-		PrintWriter out = response.getWriter();
-		System.out.println("String enviada via get: " + nome);
+		String id = request.getParameter("id");
+		String id_card = request.getParameter("idcard");
+		System.out.println("String enviada via get: " + id + "card: "+ id_card);
 	}
 }

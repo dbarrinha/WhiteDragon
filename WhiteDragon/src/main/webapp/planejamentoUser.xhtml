@@ -9,80 +9,68 @@
         <div class="ui-g">
             <div class="ui-g-12">
             	<style>
-            		.droptarget, .droptarget1 {
-					    border: 1px solid #aaaaaa;
-					}
-            	
+            		.box{
+            			min-height: 100px;
+            			height: auto;
+            			width: 100px;
+            			padding: 10px;
+            			border-width: 4px;
+            			border-style: solid;
+            			position: absolute;
+            		}
+            		.tarefas{
+            			width: 99px;
+            			background-color: blue;
+            			color: white;
+            			border-radius: 5px;
+            		}
+            		
             	</style>
             
             	<script type="text/javascript">
+					$(document).ready(function(){
+						$('.box div').draggable({
+							helper:'clone'
+						})
 
-            	document.addEventListener("dragstart", function(event) {
-            	    event.dataTransfer.setData("Text", event.target.id);
-            	    document.getElementById("demo").innerHTML = "Started to drag the p element.";
-            	    event.target.style.opacity = "0.4";
-            	});
+						$('.box').droppable({
+							drop: function(event,ui){
+								var id = $(ui.draggable).attr('id');
+								var toy = $(ui.draggable).attr('value');
+								var box = $(this).attr('id');
+								$.get("webServer",{ 'id':id, 'idcard':box});
+								$(ui.draggable).remove();
+								$('#' + box).append(' <div class="tarefas" id="' + id +'" value="'+toy +'" >' + toy + '</div>');
+								$('.box div').draggable({
+									helper: 'clone'
+								});
+									
+														
+							}
+						})	
 
-            	document.addEventListener("dragend", function(event) {
-            	    event.target.style.opacity = "1";
-            	});
-
-
-            	/* Events fired on the drop target */
-
-            	// When the draggable p element enters the droptarget, change the DIVS's border style
-            	document.addEventListener("dragenter", function(event) {
-            	    if ( event.target.className == "droptarget1" || event.target.className == "droptarget") {
-            	        event.target.style.border = "3px dotted red";
-            	        alert( event.target.className);
-            	    }
-            	});
-
-            	// By default, data/elements cannot be dropped in other elements. To allow a drop, we must prevent the default handling of the element
-            	document.addEventListener("dragover", function(event) {
-            	    event.preventDefault();
-            	});
-
-            	// When the draggable p element leaves the droptarget, reset the DIVS's border style
-            	document.addEventListener("dragleave", function(event) {
-            	    if ( event.target.className == "droptarget1" || event.target.className == "droptarget") {
-            	        event.target.style.border = "";
-            	    }
-            	});
-
-            	
-            	document.addEventListener("drop", function(event) {
-            	    event.preventDefault();
-            	    if ( event.target.className == "droptarget1" || event.target.className == "droptarget") {
-            	        document.getElementById("demo").style.color = "";
-            	        event.target.style.border = "";
-            	        var data = event.dataTransfer.getData("Text");
-            	        event.target.appendChild(document.getElementById(data));
-            	    }
-            	});
+					});
 				</script>
                 
                 <h:form id="form">
-	                		<div class="ui-g-6 ui-md-3">
-				                <p:fieldset legend="Hoje #{timeController.dataAtual(0)}">
-									<ul id="1" class="droptarget" >
-										<p:repeat var="tarefa" value="#{timeController.tarefas}">
-											<li class="dragtarget" draggable="true">#{tarefa.descricao}<sup><small>#{tarefa.duracao}</small></sup></li>
-										</p:repeat>
-									</ul>
-								</p:fieldset>
-			                </div>
-			                  
-			                <div class="ui-g-6 ui-md-3">
-			                	<p:fieldset legend="#{timeController.diaSemana(1)} #{timeController.dataAtual(1)}">
-									<ul id="2" class="droptarget1" >
-										<p:repeat var="tarefa" value="#{timeController.tarefas}">
-											<li class="dragtarget" draggable="true">#{tarefa.descricao}<sup><small>#{tarefa.duracao}</small></sup></li>
-										</p:repeat>
-									</ul>
-								</p:fieldset>
-			                </div>
-                
+	               	
+	               	
+					<div class="ui-g-6 ui-md-3">
+						<div class="box" id="1">
+	               			<p:repeat var="tarefa" value="#{timeController.tarefas}">
+								<div class="tarefas" id="#{tarefa.id}" value="#{tarefa.descricao}">#{tarefa.descricao}</div>
+							</p:repeat>
+	               		</div>
+	               	</div>	
+	               	<br/><br/><br/><br/><br/><br/><br/><br/>
+	               	<div class="ui-g-6 ui-md-3">	
+	               		<div class="box" id="2">
+	               			<p:repeat var="tarefa" value="#{timeController.tarefas2}">
+								<div class="tarefas" id="#{tarefa.id}"  value="#{tarefa.descricao}">#{tarefa.descricao} </div>
+							</p:repeat>
+	               		</div>
+	               	</div>	
+					<br/><br/><br/><br/><br/><br/><br/><br/>		
                 
                 </h:form>
             </div>

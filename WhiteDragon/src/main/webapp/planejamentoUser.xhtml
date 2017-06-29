@@ -16,6 +16,7 @@
             			border-style: double;
             			background-color: white;
             			border-bottom-left-radius: 10px;
+            			
             		}
             		.tarefas{
             			width: 300px;
@@ -26,29 +27,38 @@
             			border-radius: 2px;
             			border-style: ridge;
             			margin-bottom: 3px;
+            			transition: 0.05s;
             		}
+            		.ui-tarefa-placeholder { 
+						@extend .tarefas;
+						background: #95a5a6;
+						box-shadow: inset 1px 1px 2px rgba(black,0.3);
+					} 
             		
             	</style>
             
             	<script type="text/javascript">
 					$(document).ready(function(){
-						$('.box div').draggable({
-							helper:'clone'
+						$('.box div').draggable({ // torna a div dentro de .box(classe das boxes) draggable
+							helper:'clone',//clona o objeto selecionado para caso n seja dropado, retornar a sua posição anterior
+							cursor: "pointer",
+							opacity: 0.8
+							
 						})
 
-						$('.box').droppable({
-							drop: function(event,ui){
-								var id = $(ui.draggable).attr('id');
-								var toy = $(ui.draggable).attr('value');
-								var box = $(this).attr('id');
-								$.get("webServer",{'id': id, 'idcard': box});
-								$(ui.draggable).remove();
-								$('#' + box).append(' <div class="tarefas"  id="' + id +'" value="'+toy +'" > ' + toy + ' </div>');
-								$('.box div').draggable({
-									helper: 'clone'
-								});
-									
-														
+						$('.box').droppable({//torna .box dropável
+							drop: function(event,ui){//função que será realizada com o evento de drop
+								var id = $(ui.draggable).attr('id'); //pegando id do item dropado
+								var toy = $(ui.draggable).attr('value'); //pegando value do item (string mostrada no item)
+								var box = $(this).attr('id');//pehando id da box em que o item foi dropado
+								$.get("webServer",{'id': id, 'idcard': box}); // comunicando ao webServer via get o id do item e o id do box, para que meu banco ou própio Web Server faça a atualização
+								$(ui.draggable).remove(); //remove o item dropado da sua antiga posição
+								$(this).append('<div class="tarefas"  id="' + id +'" value="'+toy +'" > ' + toy + ' </div>');//adiciona o novo item com as mesmas propriedades a lista que foi dropada
+								$('.box div').draggable({//torna o novo item draggable também
+									helper: 'clone',
+									cursor: "pointer",
+									opacity: 0.8
+								});						
 							}
 						})	
 
@@ -59,7 +69,7 @@
             	
                 <h:form id="form">
 					<div class="ui-g-6 ui-md-3">
-						<h:outputLabel value="fsds" />
+						<h:outputLabel value="Hoje" />
 						<div class="box" id="1">
 	               			<p:repeat var="tarefa" value="#{timeController.tarefas}">
 								<div class="tarefas" style="margin-botton:4px;" id="#{tarefa.id}" value="#{tarefa.descricao}"> #{tarefa.descricao} </div>
@@ -68,8 +78,26 @@
 	               	</div>	
 	               	<br/>
 	               	<div class="ui-g-6 ui-md-3 ">
-	               		<h:outputLabel value="fsds" />	
+	               		<h:outputLabel value="Amanhã" />	
 	               		<div class="box" id="2">
+	               			<p:repeat var="tarefa" value="#{timeController.tarefas2}">
+								<div class="tarefas" style="margin-botton:4px;" id="#{tarefa.id}"  value="#{tarefa.descricao}"> #{tarefa.descricao} </div>
+							</p:repeat>
+	               		</div>
+	               	</div>	
+					<br/>
+					<div class="ui-g-6 ui-md-3 ">
+	               		<h:outputLabel value="..." />	
+	               		<div class="box" id="3">
+	               			<p:repeat var="tarefa" value="#{timeController.tarefas2}">
+								<div class="tarefas" style="margin-botton:4px;" id="#{tarefa.id}"  value="#{tarefa.descricao}"> #{tarefa.descricao} </div>
+							</p:repeat>
+	               		</div>
+	               	</div>	
+					<br/>
+					<div class="ui-g-6 ui-md-3 ">
+	               		<h:outputLabel value="..." />	
+	               		<div class="box" id="4">
 	               			<p:repeat var="tarefa" value="#{timeController.tarefas2}">
 								<div class="tarefas" style="margin-botton:4px;" id="#{tarefa.id}"  value="#{tarefa.descricao}"> #{tarefa.descricao} </div>
 							</p:repeat>

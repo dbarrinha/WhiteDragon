@@ -75,14 +75,6 @@ public class TimeController implements Serializable{
 	public void setTarefa(Tarefa tarefa) {
 		this.tarefa = tarefa;
 	}
-
-	/*public void onDrop(DragDropEvent ddEvent) {
-		System.out.println("Entrou on drop");
-		Tarefa tarefa = ((Tarefa) ddEvent.getData());
-		tarefasDropadas.add(tarefa);
-		tarefas.remove(tarefa);
-		System.out.println("Tam 1: "+tarefas.size() + "Tam 2: "+ tarefasDropadas.size());
-	}*/
 	
 	public String dataAtual(int index){
 		Date aux = new Date(System.currentTimeMillis());

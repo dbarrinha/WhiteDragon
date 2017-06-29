@@ -10,29 +10,37 @@
             		.box{
             			min-height: 100px;
             			height: auto;
-            			width: 300px;
+            			width: 305px;
             			padding: 10px;
             			border-width: 4px;
-            			border-style: double;
+            			border-style: hidden;
             			background-color: white;
-            			border-bottom-left-radius: 10px;
+            			border-radius: 8px;
             			
             		}
             		.tarefas{
             			width: 300px;
             			height: 30px;
-            			background-color: rgb(150,200,250);
+            			background-color: #0388e5;
             			color: white;
             			text-align: center;
             			border-radius: 2px;
-            			border-style: ridge;
+            			border-style: hidden;
             			margin-bottom: 3px;
             			transition: 0.05s;
             		}
-            		.ui-tarefa-placeholder { 
-						@extend .tarefas;
-						background: #95a5a6;
-						box-shadow: inset 1px 1px 2px rgba(black,0.3);
+            		.labels { 
+						border-top-style: double;
+						border-left-style: double;
+						border-right-style: double;
+						border-bottom-style: outset;
+						background-color: white;
+						border-radius: 3px;
+						min-width: 200px;
+						width: 200px;
+						text-align: center;
+						text-overflow: ellipsis;
+						
 					} 
             		
             	</style>
@@ -68,17 +76,18 @@
 		            <div class="ui-g">
             	
                 <h:form id="form">
+                		<br/>
 					<div class="ui-g-6 ui-md-3">
-						<h:outputLabel value="Hoje" />
+						<h:outputLabel class="labels" value="Hoje #{timeController.dataAtual(0)}" />
 						<div class="box" id="1">
 	               			<p:repeat var="tarefa" value="#{timeController.tarefas}">
-								<div class="tarefas" style="margin-botton:4px;" id="#{tarefa.id}" value="#{tarefa.descricao}"> #{tarefa.descricao} </div>
+								<div class="tarefas" style="margin-botton:4px;" id="#{tarefa.id}" value="#{tarefa.descricao}">#{tarefa.descricao} </div>
 							</p:repeat>
 	               		</div>
 	               	</div>	
 	               	<br/>
 	               	<div class="ui-g-6 ui-md-3 ">
-	               		<h:outputLabel value="Amanhã" />	
+	               		<h:outputLabel class="labels" value="#{timeController.diaSemana(1)} #{timeController.dataAtual(1)}" />	
 	               		<div class="box" id="2">
 	               			<p:repeat var="tarefa" value="#{timeController.tarefas2}">
 								<div class="tarefas" style="margin-botton:4px;" id="#{tarefa.id}"  value="#{tarefa.descricao}"> #{tarefa.descricao} </div>
@@ -87,8 +96,17 @@
 	               	</div>	
 					<br/>
 					<div class="ui-g-6 ui-md-3 ">
-	               		<h:outputLabel value="..." />	
-	               		<div class="box" id="3">
+	               		<h:outputLabel class="labels" value="#{timeController.diaSemana(2)} #{timeController.dataAtual(2)}" />	
+	               		<div class="box " id="3">
+	               			<p:repeat var="tarefa" value="#{timeController.tarefas2}">
+								<div class=" tarefas" style="margin-botton:4px;" id="#{tarefa.id}"  value="#{tarefa.descricao}"> #{tarefa.descricao} </div>
+							</p:repeat>
+	               		</div>
+	               	</div>	
+					<br/>
+					<div class="ui-g-6 ui-md-3 ">
+	               		<h:outputLabel class="labels" value="#{timeController.diaSemana(3)} #{timeController.dataAtual(3)}" />	
+	               		<div class="box" id="4">
 	               			<p:repeat var="tarefa" value="#{timeController.tarefas2}">
 								<div class="tarefas" style="margin-botton:4px;" id="#{tarefa.id}"  value="#{tarefa.descricao}"> #{tarefa.descricao} </div>
 							</p:repeat>
@@ -96,15 +114,15 @@
 	               	</div>	
 					<br/>
 					<div class="ui-g-6 ui-md-3 ">
-	               		<h:outputLabel value="..." />	
-	               		<div class="box" id="4">
+	               		<h:outputLabel class="labels" value="#{timeController.diaSemana(4)} #{timeController.dataAtual(4)}" />	
+	               		<div class="box" id="5">
 	               			<p:repeat var="tarefa" value="#{timeController.tarefas2}">
 								<div class="tarefas" style="margin-botton:4px;" id="#{tarefa.id}"  value="#{tarefa.descricao}"> #{tarefa.descricao} </div>
 							</p:repeat>
 	               		</div>
 	               	</div>	
-					<br/>		
-                
+					<br/>
+							
                 </h:form>
             </div>
         </div>
